@@ -24,12 +24,18 @@ ${cmd} | tee ${outfile}
 client=`cat ${outfile} | cut -d' ' -f8 | sed 's/,//g'`
 secret=`cat ${outfile} | cut -d' ' -f10`
 php bin/console fos:user:create ${ADMIN_NAME} some@email.com ${ADMIN_PASS} --super-admin
+#php bin/console fos:user:create ${USER_NAME} some@email.com ${USER_PASS}
 
 if [ "$1" == "--test" ]; then
     ../scripts/initdb.sh --test
 fi
 rm -f ${outfile}
+echo
+echo "================================"
+echo "SERVER INFORMATION ENV: ${DOCKER_ENV}"
+echo "================================"
 echo "Client id: ${client}"
 echo "Secret: ${secret}"
 echo "User: ${ADMIN_NAME}"
 echo "Password: ${ADMIN_PASS}"
+echo "================================"
