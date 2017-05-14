@@ -21,7 +21,7 @@ Login-->Auth: logout
 Login->>User: user logged out\n(redirect)
 ```
 
-![Sequence diagram](./diagram.svg)
+![Sequence diagram](./diagram.png)
 
 ## Server info
 
