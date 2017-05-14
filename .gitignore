@@ -1,0 +1,15 @@
+.idea
+docker-compose.yml
+nginx.Dockerfile
+docker/*.env
+!docker/dev.env
+!docker/example.env
+docker/apache/vhost.conf
+#docker/nginx/vhost.conf
+docker/apache/ports.conf
+sqlbackup/
+sqldata
+shared/*
+!shared/.gitkeep
+logs/*
+!logs/.gitkeep

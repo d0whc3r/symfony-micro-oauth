@@ -1,0 +1,54 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/authorize
+            security:   false
+            # Add your favorite authentication process here
+
+        api:
+            pattern:    ^/api
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  false # can be omitted as its default value
+
+        main:
+            pattern: ^/
+            switch_user: { role: ROLE_ADMIN, parameter: _switch }
+            form_login:
+                provider: fos_userbundle
+#                csrf_provider: form.csrf_provider
+                login_path: login_route
+                check_path: login_check
+            logout:
+                path:   /logout
+                target: /login
+            anonymous:    true
+
+    access_control:
+#        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/profile, role: IS_AUTHENTICATED_FULLY }
+#        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/api/admin, role: ROLE_ADMIN }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -1,0 +1,47 @@
+app:
+    path:     /
+    defaults: { _controller: AppBundle:Default:index }
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /docapi/
+
+rest_server:
+    resource: "@AppBundle/Resources/config/user_routing.yml"
+    prefix:   /api/
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+
+# login_route:
+#     path:     /login/
+#     defaults: { _controller: AppBundle:Security:login }
+#
+# fos_user_security_login:
+#     path: /login/
+
+login_check:
+    path: /login_check
+    defaults: { _controller: AppBundle:Security:check }
+
+logout:
+    path: /logout/
+    defaults: { _controller: AppBundle:Security:logout }
+
+fos_user_security_logout:
+    path: /logout/
+
+# fos_user_profile:
+#     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+#     prefix: /profile/
+#
+# fos_user_register:
+#     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+#     prefix: /register/
+#
+# fos_user_change_password:
+#     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+#     prefix: /profile-change/

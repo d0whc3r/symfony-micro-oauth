@@ -1,0 +1,13 @@
+rest:
+    type: rest
+    methods: [GET]
+    resource: AppBundle\Controller\RestController
+
+post_rest:
+    type: rest
+    methods: [POST]
+    resource: AppBundle\Controller\PostRestController
+
+rest_admin_server:
+    resource: "@AppBundle/Resources/config/admin_routing.yml"
+    prefix:   /admin

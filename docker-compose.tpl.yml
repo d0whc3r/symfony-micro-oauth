@@ -1,0 +1,64 @@
+version: '2.1'
+services:
+  ${DOCKER_API}:
+    build:
+      context: .
+      dockerfile: php7.Dockerfile
+    image: ${DOCKER_API_IMAGE}:latest
+    container_name: ${DOCKER_API}
+    restart: unless-stopped
+    volumes:
+      - ./server:/app/server
+      - ./server/sql:/app/server/sql:ro
+      - ./server/src:/app/server/src:ro
+      - ./scripts:/app/scripts:ro
+      - ./logs/symfony:/app/server/var/logs
+      - /app/server/var/cache
+      - /app/server/var/sessions
+      - /app/server/vendor/
+      - /app/server/web/bundles/
+    env_file:
+      - ./docker/${ENV}.env
+    links:
+      - ${DOCKER_MYSQL}
+    depends_on:
+      ${DOCKER_MYSQL}:
+        condition: service_healthy
+    healthcheck:
+      test: "exit 0"
+
+  ${DOCKER_NGINX}:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    image: ${DOCKER_NGINX_IMAGE}:latest
+    container_name: ${DOCKER_NGINX}
+    restart: unless-stopped
+#    ports:
+#      - "${API_PORT_EXPOSED}:${API_PORT}"
+    volumes:
+      - ./logs/nginx/:/var/log/nginx
+    volumes_from:
+      - ${DOCKER_API}
+    env_file:
+      - ./docker/${ENV}.env
+    links:
+      - ${DOCKER_MYSQL}
+    depends_on:
+      ${DOCKER_MYSQL}:
+        condition: service_healthy
+    healthcheck:
+      test: "exit 0"
+
+  ${DOCKER_MYSQL}:
+    image: mariadb:latest
+    volumes:
+      - ./sqldata:/var/lib/mysql
+    container_name: ${DOCKER_MYSQL}
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    env_file:
+      - ./docker/${ENV}.env
+    healthcheck:
+      test: "exit 0"

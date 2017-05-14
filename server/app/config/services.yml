@@ -1,0 +1,29 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+    user.class: AppBundle\Entity\FosUser
+    user.provider.class: AppBundle\Security\Provider\UserProvider
+
+services:
+    user.provider:
+      class: %user.provider.class%
+      arguments: ["@doctrine.orm.entity_manager", %user.class%]
+
+    fos_user.doctrine_registry:
+        alias: doctrine
+
+    app.twig_extension:
+        class: AppBundle\Twig\AppExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+#    app.registration.form.type:
+#        class: AppBundle\Form\Type\RegistrationFormType
+#        arguments: [%fos_user.model.user.class%]
+#        tags:
+#            - { name: form.type, alias: custom_user_registration }
+
+    app.util.user_manipulator:
+        class:      AppBundle\Util\UserManipulator
+        arguments:  ["@fos_user.user_manager"]

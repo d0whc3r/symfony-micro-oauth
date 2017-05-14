@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: '%env(DOCKER_MYSQL)%'
+    database_port: '%env(SYMFONY_DB_PORT)%'
+    database_name: '%env(DB_NAME)%'
+    database_user: '%env(DB_USER)%'
+    database_password: '%env(DB_PASS)%'
+    mailer_transport: smtp
+    mailer_host: '%env(SYMFONY_SMTP_HOST)%'
+    mailer_user: '%env(SYMFONY_SMTP_USER)%'
+    mailer_password: '%env(SYMFONY_SMTP_PASS)%'
+    secret: '%env(SYMFONY_SECRET)%'

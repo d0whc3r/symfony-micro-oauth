@@ -1,0 +1,9 @@
+admin_rest:
+    type: rest
+    methods: [GET]
+    resource: AppBundle\Controller\Admin\RestController
+
+admin_post_rest:
+    type: rest
+    methods: [POST]
+    resource: AppBundle\Controller\Admin\PostRestController
