@@ -83,9 +83,26 @@
             "key": "Accept",
             "value": "application/json",
             "description": ""
+          }
+        ],
+        "body": {},
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "User admin info",
+      "request": {
+        "url": "http://security.api:4444/api/admin/user",
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "description": ""
           },
           {
-            "key": "Content-Type",
+            "key": "Accept",
             "value": "application/json",
             "description": ""
           }
