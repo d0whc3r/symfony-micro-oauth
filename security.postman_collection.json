@@ -1,0 +1,129 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Symfony security module",
+    "_postman_id": "47c5d2bd-02a3-5f38-4a79-23e3601b4378",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get oauth token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "tests[\"Body matches string\"] = responseBody.has(\"access_token\");",
+              "",
+              "var jsonData = JSON.parse(responseBody); ",
+              "postman.setGlobalVariable(\"access_token\", jsonData.access_token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "url": "http://security.api:4444/oauth/v2/token",
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "enabled": true
+            },
+            {
+              "key": "client_id",
+              "value": "1_developmentClientId",
+              "type": "text",
+              "enabled": true
+            },
+            {
+              "key": "client_secret",
+              "value": "developmentSecretId",
+              "type": "text",
+              "enabled": true
+            },
+            {
+              "key": "username",
+              "value": "admin_dev",
+              "type": "text",
+              "enabled": true
+            },
+            {
+              "key": "password",
+              "value": "admin_password_dev",
+              "type": "text",
+              "enabled": true
+            }
+          ]
+        },
+        "description": "Get oauth token"
+      },
+      "response": []
+    },
+    {
+      "name": "User info",
+      "request": {
+        "url": "http://security.api:4444/api/user",
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "description": ""
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "description": ""
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {},
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "Act sample",
+      "request": {
+        "url": "http://security.api:4444/api/act",
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "description": ""
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "description": ""
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"action\": \"https://jsonplaceholder.typicode.com/posts\"\n}"
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
