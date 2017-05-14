@@ -34,8 +34,8 @@ services:
     image: ${DOCKER_NGINX_IMAGE}:latest
     container_name: ${DOCKER_NGINX}
     restart: unless-stopped
-#    ports:
-#      - "${API_PORT_EXPOSED}:${API_PORT}"
+    ports:
+      - "${API_PORT_EXPOSED}:${API_PORT}"
     volumes:
       - ./logs/nginx/:/var/log/nginx
     volumes_from:
